@@ -1,13 +1,7 @@
-type Query {
-  plants: [Plant!]!
-  plant(id: ID!): Plant
-  schedule: Schedule
-}
-
 type Plant {
   id: ID!
-  name: String
-  species: String
+  name: String!
+  species: String!
   schedule: Schedule
 }
 
@@ -17,6 +11,17 @@ type Schedule {
   plants: [Plant]
 }
 
+type Query {
+  plants: [Plant!]!
+  plant(id: ID!): Plant
+  schedule: Schedule
+}
+
+type Mutation {
+  CreatePlant(name: String!, species: String!): Plant!
+}
+
 schema {
   query: Query
+  mutation: Mutation
 }

@@ -14,11 +14,22 @@ export type Scalars = {
   Float: number,
 };
 
+export type Mutation = {
+   __typename?: 'Mutation',
+  CreatePlant: Plant,
+};
+
+
+export type MutationCreatePlantArgs = {
+  name: Scalars['String'],
+  species: Scalars['String']
+};
+
 export type Plant = {
    __typename?: 'Plant',
   id: Scalars['ID'],
-  name?: Maybe<Scalars['String']>,
-  species?: Maybe<Scalars['String']>,
+  name: Scalars['String'],
+  species: Scalars['String'],
   schedule?: Maybe<Schedule>,
 };
 

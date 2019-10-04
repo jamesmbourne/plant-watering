@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Suspense } from "react";
+import { DateTime } from "luxon";
 import {
   useGetMyPlantsQuery,
   useGetPlantQuery,
@@ -6,6 +7,7 @@ import {
 } from "./generated/graphql";
 import { Switch, Route, RouteChildrenProps } from "react-router";
 import { Link } from "react-router-dom";
+import Maybe from "graphql/tsutils/Maybe";
 
 const Plants: React.FC = () => (
   <Switch>
@@ -18,11 +20,13 @@ const PlantsList: React.FC = () => {
   const { loading, error, data } = useGetMyPlantsQuery();
 
   if (loading) {
-    return <>Loading...</>;
+    return null;
   }
+
   if (error || !data) {
     return <>Error</>;
   }
+
   return (
     <>
       {data.plants.map(({ id, name, species }) => (
@@ -45,7 +49,7 @@ const PlantById: React.FC<PlantByIdProps> = ({ match }) => {
   const { loading, error, data } = useGetPlantQuery({ variables: { id } });
 
   if (loading) {
-    return <>Loading...</>;
+    return null;
   }
 
   if (error || !data || !data.plant) {
@@ -57,15 +61,27 @@ const PlantById: React.FC<PlantByIdProps> = ({ match }) => {
   } = data;
 
   return (
-    <>
+    <Suspense fallback={<>Loading...</>}>
       <h1>{name}</h1>
       <h3>{species}</h3>
-      {schedule && <DisplaySchedule {...schedule} />}
+      <DisplaySchedule schedule={schedule} />
       <Link to="/">← back to all plants</Link>
-    </>
+    </Suspense>
   );
 };
 
-const DisplaySchedule: React.FC<Schedule> = ({ date }) => <p>{date}</p>;
+interface DisplayScheduleProps {
+  schedule: Maybe<Schedule>;
+}
+
+const DisplaySchedule: React.FC<DisplayScheduleProps> = ({ schedule }) => (
+  <p>
+    {schedule
+      ? `next due for watering ${DateTime.fromISO(schedule.date)
+          .plus({ days: 3 })
+          .toRelative()}`
+      : ""}
+  </p>
+);
 
 export default Plants;

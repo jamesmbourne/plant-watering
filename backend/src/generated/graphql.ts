@@ -10,11 +10,22 @@ export type Scalars = {
   Float: number,
 };
 
+export type Mutation = {
+   __typename?: 'Mutation',
+  CreatePlant: Plant,
+};
+
+
+export type MutationCreatePlantArgs = {
+  name: Scalars['String'],
+  species: Scalars['String']
+};
+
 export type Plant = {
    __typename?: 'Plant',
   id: Scalars['ID'],
-  name?: Maybe<Scalars['String']>,
-  species?: Maybe<Scalars['String']>,
+  name: Scalars['String'],
+  species: Scalars['String'],
   schedule?: Maybe<Schedule>,
 };
 
@@ -141,6 +152,7 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Schedule: ResolverTypeWrapper<Schedule>,
+  Mutation: ResolverTypeWrapper<{}>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
 };
 
@@ -151,13 +163,18 @@ export type ResolversParentTypes = {
   ID: Scalars['ID'],
   String: Scalars['String'],
   Schedule: Schedule,
+  Mutation: {},
   Boolean: Scalars['Boolean'],
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  CreatePlant?: Resolver<ResolversTypes['Plant'], ParentType, ContextType, RequireFields<MutationCreatePlantArgs, 'name' | 'species'>>,
 };
 
 export type PlantResolvers<ContextType = any, ParentType extends ResolversParentTypes['Plant'] = ResolversParentTypes['Plant']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  species?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  species?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   schedule?: Resolver<Maybe<ResolversTypes['Schedule']>, ParentType, ContextType>,
 };
 
@@ -174,6 +191,7 @@ export type ScheduleResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type Resolvers<ContextType = any> = {
+  Mutation?: MutationResolvers<ContextType>,
   Plant?: PlantResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Schedule?: ScheduleResolvers<ContextType>,

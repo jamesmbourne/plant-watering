@@ -16,7 +16,6 @@ const server = new ApolloServer({
     return err;
   },
   formatResponse: (response: any) => {
-    log.info(response);
     return response;
   },
   context: ({ event, context }) => ({
