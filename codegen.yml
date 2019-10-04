@@ -1,0 +1,19 @@
+overwrite: true
+schema: "backend/src/schema.graphql"
+documents: "client/src/**/*.graphql"
+generates:
+  backend/src/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-resolvers
+
+  client/src/generated/graphql.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+      withHOC: false
+      reactApolloVersion: 3

@@ -1,0 +1,32 @@
+{
+  "name": "plant-watering",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesmbourne/plant-watering.git"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.8.0",
+    "@graphql-codegen/typescript": "1.8.0",
+    "@graphql-codegen/typescript-operations": "^1.8.0",
+    "@graphql-codegen/typescript-react-apollo": "^1.8.0",
+    "@graphql-codegen/typescript-resolvers": "1.8.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesmbourne/plant-watering/issues"
+  },
+  "homepage": "https://github.com/jamesmbourne/plant-watering#readme",
+  "dependencies": {
+    "@types/graphql": "^14.5.0",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1"
+  }
+}

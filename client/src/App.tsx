@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider, useQuery } from "@apollo/react-hooks";
+import { useGetMyPlantsQuery } from "./generated/graphql";
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
@@ -39,8 +40,7 @@ const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
       <Wrapper>
-        <p>endpoint: {process.env.REACT_APP_GRAPHQL_ENDPOINT}</p>
-        <Title>Plant Watering!</Title>
+        <Title>Plant Watering 💦🌱</Title>
       </Wrapper>
       <BodyWrapper>
         <Plants />
@@ -50,18 +50,28 @@ const App: React.FC = () => {
 };
 
 const Plants: React.FC = () => {
-  const { loading, error, data } = useQuery(PLANTS);
+  const { loading, error, data } = useGetMyPlantsQuery();
 
-  if (!data) {
+  if (loading) {
     return <>Loading...</>;
   }
 
-  return data.getPlants.map((p: any) => (
+  if (error || !data) {
+    return <>Error</>;
+  }
+
+  return (
     <>
-      <h1>{p.name}</h1>
-      <p>{p.id}</p>
+      {data.getPlants.map(({ id, name, species }) => (
+        <Fragment key={id}>
+          <h1>
+            <a href={`/plants/${id}`}>{name}</a>
+          </h1>
+          <h5>{species}</h5>
+        </Fragment>
+      ))}
     </>
-  ));
+  );
 };
 
 export default App;

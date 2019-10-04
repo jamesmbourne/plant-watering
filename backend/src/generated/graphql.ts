@@ -18,18 +18,18 @@ export type Plant = {
 
 export type Query = {
    __typename?: 'Query',
-  getPlants: Array<Maybe<Plant>>,
+  getPlants: Array<Plant>,
 };
 
-export type FloobarQueryVariables = {};
+export type GetMyPlantsQueryVariables = {};
 
 
-export type FloobarQuery = (
+export type GetMyPlantsQuery = (
   { __typename?: 'Query' }
-  & { getPlants: Array<Maybe<(
+  & { getPlants: Array<(
     { __typename?: 'Plant' }
-    & Pick<Plant, 'name'>
-  )>> }
+    & Pick<Plant, 'id' | 'name' | 'species'>
+  )> }
 );
 
 
@@ -126,7 +126,7 @@ export type PlantResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getPlants?: Resolver<Array<Maybe<ResolversTypes['Plant']>>, ParentType, ContextType>,
+  getPlants?: Resolver<Array<ResolversTypes['Plant']>, ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {

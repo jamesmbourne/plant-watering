@@ -7,16 +7,18 @@ import uuid from "uuid/v4";
 
 // const docClient = new DynamoDBXRay.DocumentClient();
 
+const plants = [
+  { id: uuid(), name: "steve", species: "monstera deliciosa" },
+  { id: uuid(), name: "bob", species: "cactus" },
+  { id: uuid(), name: "henry", species: "hawthorn" },
+  { id: uuid(), name: "andy", species: "amaryllis" },
+  { id: uuid(), name: "oliver", species: "orchid" }
+];
+
 export const resolvers: Resolvers = {
   Query: {
     getPlants: async (_root, _args) => {
-      return [
-        { id: uuid(), name: "steve", species: "monstera deliciosa" },
-        { id: uuid(), name: "bob", species: "cactus" },
-        { id: uuid(), name: "henry", species: "hawthorn" },
-        { id: uuid(), name: "andy", species: "amaryllis" },
-        { id: uuid(), name: "oliver", species: "orchid" }
-      ];
+      return plants;
     }
   }
 };
