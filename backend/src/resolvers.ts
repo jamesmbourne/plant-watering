@@ -19,6 +19,9 @@ export const resolvers: Resolvers = {
   Query: {
     getPlants: async (_root, _args) => {
       return plants;
+    },
+    getPlant: async (_root, _args) => {
+      return plants[0];
     }
   }
 };

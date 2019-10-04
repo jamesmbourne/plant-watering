@@ -1,5 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
 export type Maybe<T> = T | null;
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string,
@@ -19,6 +20,12 @@ export type Plant = {
 export type Query = {
    __typename?: 'Query',
   getPlants: Array<Plant>,
+  getPlant?: Maybe<Plant>,
+};
+
+
+export type QueryGetPlantArgs = {
+  id: Scalars['ID']
 };
 
 export type GetMyPlantsQueryVariables = {};
@@ -27,6 +34,19 @@ export type GetMyPlantsQueryVariables = {};
 export type GetMyPlantsQuery = (
   { __typename?: 'Query' }
   & { getPlants: Array<(
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id' | 'name' | 'species'>
+  )> }
+);
+
+export type GetPlantQueryVariables = {
+  id: Scalars['ID']
+};
+
+
+export type GetPlantQuery = (
+  { __typename?: 'Query' }
+  & { plant: Maybe<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id' | 'name' | 'species'>
   )> }
@@ -127,6 +147,7 @@ export type PlantResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getPlants?: Resolver<Array<ResolversTypes['Plant']>, ParentType, ContextType>,
+  getPlant?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, RequireFields<QueryGetPlantArgs, 'id'>>,
 };
 
 export type Resolvers<ContextType = any> = {

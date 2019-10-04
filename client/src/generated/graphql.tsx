@@ -24,6 +24,12 @@ export type Plant = {
 export type Query = {
    __typename?: 'Query',
   getPlants: Array<Plant>,
+  getPlant?: Maybe<Plant>,
+};
+
+
+export type QueryGetPlantArgs = {
+  id: Scalars['ID']
 };
 
 export type GetMyPlantsQueryVariables = {};
@@ -32,6 +38,19 @@ export type GetMyPlantsQueryVariables = {};
 export type GetMyPlantsQuery = (
   { __typename?: 'Query' }
   & { getPlants: Array<(
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id' | 'name' | 'species'>
+  )> }
+);
+
+export type GetPlantQueryVariables = {
+  id: Scalars['ID']
+};
+
+
+export type GetPlantQuery = (
+  { __typename?: 'Query' }
+  & { plant: Maybe<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id' | 'name' | 'species'>
   )> }
@@ -78,3 +97,44 @@ export function useGetMyPlantsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type GetMyPlantsQueryHookResult = ReturnType<typeof useGetMyPlantsQuery>;
 export type GetMyPlantsLazyQueryHookResult = ReturnType<typeof useGetMyPlantsLazyQuery>;
 export type GetMyPlantsQueryResult = ApolloReactCommon.QueryResult<GetMyPlantsQuery, GetMyPlantsQueryVariables>;
+export const GetPlantDocument = gql`
+    query GetPlant($id: ID!) {
+  plant: getPlant(id: $id) {
+    id
+    name
+    species
+  }
+}
+    `;
+export type GetPlantComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetPlantQuery, GetPlantQueryVariables>, 'query'> & ({ variables: GetPlantQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetPlantComponent = (props: GetPlantComponentProps) => (
+      <ApolloReactComponents.Query<GetPlantQuery, GetPlantQueryVariables> query={GetPlantDocument} {...props} />
+    );
+    
+
+/**
+ * __useGetPlantQuery__
+ *
+ * To run a query within a React component, call `useGetPlantQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlantQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlantQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPlantQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetPlantQuery, GetPlantQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetPlantQuery, GetPlantQueryVariables>(GetPlantDocument, baseOptions);
+      }
+export function useGetPlantLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetPlantQuery, GetPlantQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetPlantQuery, GetPlantQueryVariables>(GetPlantDocument, baseOptions);
+        }
+export type GetPlantQueryHookResult = ReturnType<typeof useGetPlantQuery>;
+export type GetPlantLazyQueryHookResult = ReturnType<typeof useGetPlantLazyQuery>;
+export type GetPlantQueryResult = ApolloReactCommon.QueryResult<GetPlantQuery, GetPlantQueryVariables>;

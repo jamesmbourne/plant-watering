@@ -1,5 +1,6 @@
 type Query {
   getPlants: [Plant!]!
+  getPlant(id: ID!): Plant
 }
 
 type Plant {

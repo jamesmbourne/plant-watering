@@ -1,8 +1,9 @@
-import React, { Fragment } from "react";
+import { ApolloProvider } from "@apollo/react-hooks";
+import ApolloClient from "apollo-boost";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import styled from "styled-components";
-import ApolloClient, { gql } from "apollo-boost";
-import { ApolloProvider, useQuery } from "@apollo/react-hooks";
-import { useGetMyPlantsQuery } from "./generated/graphql";
+import Plants from "./Plants";
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
@@ -27,50 +28,23 @@ const BodyWrapper = styled.section`
   padding: 4em;
 `;
 
-const PLANTS = gql`
-  {
-    getPlants {
-      id
-      name
-    }
-  }
-`;
-
 const App: React.FC = () => {
   return (
-    <ApolloProvider client={client}>
-      <Wrapper>
-        <Title>Plant Watering 💦🌱</Title>
-      </Wrapper>
-      <BodyWrapper>
-        <Plants />
-      </BodyWrapper>
-    </ApolloProvider>
-  );
-};
-
-const Plants: React.FC = () => {
-  const { loading, error, data } = useGetMyPlantsQuery();
-
-  if (loading) {
-    return <>Loading...</>;
-  }
-
-  if (error || !data) {
-    return <>Error</>;
-  }
-
-  return (
-    <>
-      {data.getPlants.map(({ id, name, species }) => (
-        <Fragment key={id}>
-          <h1>
-            <a href={`/plants/${id}`}>{name}</a>
-          </h1>
-          <h5>{species}</h5>
-        </Fragment>
-      ))}
-    </>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <Wrapper>
+          <Title>
+            Plant Watering{" "}
+            <span role="img" aria-label="plant being watered">
+              💦🌱
+            </span>
+          </Title>
+        </Wrapper>
+        <BodyWrapper>
+          <Plants />
+        </BodyWrapper>
+      </ApolloProvider>
+    </BrowserRouter>
   );
 };
 
