@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server-lambda";
-import { resolvers } from "./resolvers";
 import { createLogger, stdSerializers } from "bunyan";
-import { importSchema } from "graphql-import";
+import { resolvers } from "./resolvers";
+const schema = require("./schema.graphql");
 
 const log = createLogger({
   name: "plant-watering-backend",
@@ -9,7 +9,7 @@ const log = createLogger({
 });
 
 const server = new ApolloServer({
-  typeDefs: importSchema("src/schema.graphql"),
+  typeDefs: schema,
   resolvers: resolvers as any,
   formatError: err => {
     log.error({ err });

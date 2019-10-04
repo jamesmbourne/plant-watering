@@ -32,6 +32,20 @@ module.exports = {
         test: /\.mjs$/,
         include: /node_modules/,
         type: "javascript/auto"
+      },
+      {
+        test: /\.graphql?$/,
+        use: [
+          {
+            loader: "webpack-graphql-loader",
+            options: {
+              // validate: true,
+              // schema: "./path/to/schema.json",
+              // removeUnusedFragments: true
+              // etc. See "Loader Options" below
+            }
+          }
+        ]
       }
     ]
   }
