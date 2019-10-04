@@ -1,0 +1,12 @@
+type Query {
+  getPlants: [Plant]!
+}
+
+type Plant {
+  id: ID!
+  name: String
+}
+
+schema {
+  query: Query
+}
