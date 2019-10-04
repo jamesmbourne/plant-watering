@@ -4,7 +4,7 @@ import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider, useQuery } from "@apollo/react-hooks";
 
 const client = new ApolloClient({
-  uri: "https://9vkow8dtoe.execute-api.eu-west-2.amazonaws.com/dev/graphql"
+  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
 });
 
 // Create a <Title> react component that renders an <h1> which is
@@ -39,6 +39,7 @@ const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
       <Wrapper>
+        <p>endpoint: {process.env.REACT_APP_GRAPHQL_ENDPOINT}</p>
         <Title>Plant Watering!</Title>
       </Wrapper>
       <BodyWrapper>

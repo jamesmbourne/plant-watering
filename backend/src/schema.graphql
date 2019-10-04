@@ -5,6 +5,7 @@ type Query {
 type Plant {
   id: ID!
   name: String
+  species: String
 }
 
 schema {

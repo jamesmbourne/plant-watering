@@ -1,4 +1,5 @@
 import { Resolvers } from "./generated/graphql";
+import uuid from "uuid/v4";
 
 // import DynamoDB from "aws-sdk/clients/dynamodb";
 // import AWSXRay from "aws-xray-sdk";
@@ -9,7 +10,13 @@ import { Resolvers } from "./generated/graphql";
 export const resolvers: Resolvers = {
   Query: {
     getPlants: async (_root, _args) => {
-      return [{ id: "foobar", name: "steve" }];
+      return [
+        { id: uuid(), name: "steve", species: "monstera deliciosa" },
+        { id: uuid(), name: "bob", species: "cactus" },
+        { id: uuid(), name: "henry", species: "hawthorn" },
+        { id: uuid(), name: "andy", species: "amaryllis" },
+        { id: uuid(), name: "oliver", species: "orchid" }
+      ];
     }
   }
 };

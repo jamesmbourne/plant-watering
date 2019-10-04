@@ -13,6 +13,7 @@ export type Plant = {
    __typename?: 'Plant',
   id: Scalars['ID'],
   name?: Maybe<Scalars['String']>,
+  species?: Maybe<Scalars['String']>,
 };
 
 export type Query = {
@@ -121,6 +122,7 @@ export type ResolversParentTypes = {
 export type PlantResolvers<ContextType = any, ParentType extends ResolversParentTypes['Plant'] = ResolversParentTypes['Plant']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  species?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
