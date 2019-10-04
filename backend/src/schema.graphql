@@ -1,12 +1,20 @@
 type Query {
-  getPlants: [Plant!]!
-  getPlant(id: ID!): Plant
+  plants: [Plant!]!
+  plant(id: ID!): Plant
+  schedule: Schedule
 }
 
 type Plant {
   id: ID!
   name: String
   species: String
+  schedule: Schedule
+}
+
+type Schedule {
+  id: ID!
+  date: String!
+  plants: [Plant]
 }
 
 schema {

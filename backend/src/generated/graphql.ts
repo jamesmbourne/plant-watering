@@ -15,17 +15,26 @@ export type Plant = {
   id: Scalars['ID'],
   name?: Maybe<Scalars['String']>,
   species?: Maybe<Scalars['String']>,
+  schedule?: Maybe<Schedule>,
 };
 
 export type Query = {
    __typename?: 'Query',
-  getPlants: Array<Plant>,
-  getPlant?: Maybe<Plant>,
+  plants: Array<Plant>,
+  plant?: Maybe<Plant>,
+  schedule?: Maybe<Schedule>,
 };
 
 
-export type QueryGetPlantArgs = {
+export type QueryPlantArgs = {
   id: Scalars['ID']
+};
+
+export type Schedule = {
+   __typename?: 'Schedule',
+  id: Scalars['ID'],
+  date: Scalars['String'],
+  plants?: Maybe<Array<Maybe<Plant>>>,
 };
 
 export type GetMyPlantsQueryVariables = {};
@@ -33,7 +42,7 @@ export type GetMyPlantsQueryVariables = {};
 
 export type GetMyPlantsQuery = (
   { __typename?: 'Query' }
-  & { getPlants: Array<(
+  & { plants: Array<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id' | 'name' | 'species'>
   )> }
@@ -49,6 +58,10 @@ export type GetPlantQuery = (
   & { plant: Maybe<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id' | 'name' | 'species'>
+    & { schedule: Maybe<(
+      { __typename?: 'Schedule' }
+      & Pick<Schedule, 'id' | 'date'>
+    )> }
   )> }
 );
 
@@ -127,6 +140,7 @@ export type ResolversTypes = {
   Plant: ResolverTypeWrapper<Plant>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
   String: ResolverTypeWrapper<Scalars['String']>,
+  Schedule: ResolverTypeWrapper<Schedule>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
 };
 
@@ -136,6 +150,7 @@ export type ResolversParentTypes = {
   Plant: Plant,
   ID: Scalars['ID'],
   String: Scalars['String'],
+  Schedule: Schedule,
   Boolean: Scalars['Boolean'],
 };
 
@@ -143,16 +158,25 @@ export type PlantResolvers<ContextType = any, ParentType extends ResolversParent
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   species?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  schedule?: Resolver<Maybe<ResolversTypes['Schedule']>, ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getPlants?: Resolver<Array<ResolversTypes['Plant']>, ParentType, ContextType>,
-  getPlant?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, RequireFields<QueryGetPlantArgs, 'id'>>,
+  plants?: Resolver<Array<ResolversTypes['Plant']>, ParentType, ContextType>,
+  plant?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, RequireFields<QueryPlantArgs, 'id'>>,
+  schedule?: Resolver<Maybe<ResolversTypes['Schedule']>, ParentType, ContextType>,
+};
+
+export type ScheduleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Schedule'] = ResolversParentTypes['Schedule']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  date?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  plants?: Resolver<Maybe<Array<Maybe<ResolversTypes['Plant']>>>, ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
   Plant?: PlantResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
+  Schedule?: ScheduleResolvers<ContextType>,
 };
 
 

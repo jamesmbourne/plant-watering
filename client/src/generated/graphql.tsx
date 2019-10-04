@@ -19,17 +19,26 @@ export type Plant = {
   id: Scalars['ID'],
   name?: Maybe<Scalars['String']>,
   species?: Maybe<Scalars['String']>,
+  schedule?: Maybe<Schedule>,
 };
 
 export type Query = {
    __typename?: 'Query',
-  getPlants: Array<Plant>,
-  getPlant?: Maybe<Plant>,
+  plants: Array<Plant>,
+  plant?: Maybe<Plant>,
+  schedule?: Maybe<Schedule>,
 };
 
 
-export type QueryGetPlantArgs = {
+export type QueryPlantArgs = {
   id: Scalars['ID']
+};
+
+export type Schedule = {
+   __typename?: 'Schedule',
+  id: Scalars['ID'],
+  date: Scalars['String'],
+  plants?: Maybe<Array<Maybe<Plant>>>,
 };
 
 export type GetMyPlantsQueryVariables = {};
@@ -37,7 +46,7 @@ export type GetMyPlantsQueryVariables = {};
 
 export type GetMyPlantsQuery = (
   { __typename?: 'Query' }
-  & { getPlants: Array<(
+  & { plants: Array<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id' | 'name' | 'species'>
   )> }
@@ -53,13 +62,17 @@ export type GetPlantQuery = (
   & { plant: Maybe<(
     { __typename?: 'Plant' }
     & Pick<Plant, 'id' | 'name' | 'species'>
+    & { schedule: Maybe<(
+      { __typename?: 'Schedule' }
+      & Pick<Schedule, 'id' | 'date'>
+    )> }
   )> }
 );
 
 
 export const GetMyPlantsDocument = gql`
     query GetMyPlants {
-  getPlants {
+  plants {
     id
     name
     species
@@ -99,10 +112,14 @@ export type GetMyPlantsLazyQueryHookResult = ReturnType<typeof useGetMyPlantsLaz
 export type GetMyPlantsQueryResult = ApolloReactCommon.QueryResult<GetMyPlantsQuery, GetMyPlantsQueryVariables>;
 export const GetPlantDocument = gql`
     query GetPlant($id: ID!) {
-  plant: getPlant(id: $id) {
+  plant(id: $id) {
     id
     name
     species
+    schedule {
+      id
+      date
+    }
   }
 }
     `;

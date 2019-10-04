@@ -3,7 +3,7 @@ import { createLogger, stdSerializers } from "bunyan";
 import { resolvers } from "./resolvers";
 const schema = require("./schema.graphql");
 
-const log = createLogger({
+export const log = createLogger({
   name: "plant-watering-backend",
   serializers: { err: stdSerializers.err }
 });

@@ -1,5 +1,6 @@
-import { Resolvers } from "./generated/graphql";
 import uuid from "uuid/v4";
+import { Resolvers } from "./generated/graphql";
+import { log } from "./handler";
 
 // import DynamoDB from "aws-sdk/clients/dynamodb";
 // import AWSXRay from "aws-xray-sdk";
@@ -17,11 +18,22 @@ const plants = [
 
 export const resolvers: Resolvers = {
   Query: {
-    getPlants: async (_root, _args) => {
+    plants: async (_root, _args) => {
       return plants;
     },
-    getPlant: async (_root, _args) => {
+    plant: async (_root, _args) => {
       return plants[0];
+    }
+  },
+  Plant: {
+    schedule: async plant => {
+      log.info({ plant });
+
+      if (plant.name === "steve") {
+        return { id: "12345", date: new Date().toISOString() };
+      }
+
+      return null;
     }
   }
 };

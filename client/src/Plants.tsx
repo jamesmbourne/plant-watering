@@ -1,5 +1,9 @@
 import React, { Fragment } from "react";
-import { useGetMyPlantsQuery, useGetPlantQuery } from "./generated/graphql";
+import {
+  useGetMyPlantsQuery,
+  useGetPlantQuery,
+  Schedule
+} from "./generated/graphql";
 import { Switch, Route, RouteChildrenProps } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -21,7 +25,7 @@ const PlantsList: React.FC = () => {
   }
   return (
     <>
-      {data.getPlants.map(({ id, name, species }) => (
+      {data.plants.map(({ id, name, species }) => (
         <Fragment key={id}>
           <h1>
             <Link to={`/plants/${id}`}>{name}</Link>
@@ -49,16 +53,19 @@ const PlantById: React.FC<PlantByIdProps> = ({ match }) => {
   }
 
   const {
-    plant: { name, species }
+    plant: { name, species, schedule }
   } = data;
 
   return (
     <>
       <h1>{name}</h1>
       <h3>{species}</h3>
+      {schedule && <DisplaySchedule {...schedule} />}
       <Link to="/">← back to all plants</Link>
     </>
   );
 };
+
+const DisplaySchedule: React.FC<Schedule> = ({ date }) => <p>{date}</p>;
 
 export default Plants;

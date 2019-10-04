@@ -26,6 +26,8 @@ const Wrapper = styled.section`
 
 const BodyWrapper = styled.section`
   padding: 4em;
+  max-width: 1280px;
+  margin: auto;
 `;
 
 const App: React.FC = () => {
