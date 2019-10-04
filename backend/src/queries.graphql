@@ -1,4 +1,4 @@
-query gimmePlants {
+query floobar {
   getPlants {
     name
   }

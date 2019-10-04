@@ -3,7 +3,7 @@ service:
 
 plugins:
   - serverless-webpack
-  - serverless-dynamodb-local
+  # - serverless-dynamodb-local
   - serverless-offline
 
 provider:
@@ -15,7 +15,6 @@ provider:
 functions:
   graphql:
     handler: src/handler.graphqlHandler
-    role: ServiceRole
     events:
       - http:
           path: graphql
@@ -56,49 +55,3 @@ resources:
           - AttributeName: plantId
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
-
-    ServiceRole:
-      Type: "AWS::IAM::Role"
-      Properties:
-        RoleName: "DynamoRole"
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: "Allow"
-              Principal:
-                Service:
-                  - "lambda.amazonaws.com"
-              Action:
-                - "sts:AssumeRole"
-        Policies:
-          - PolicyName: "Dynamo-ServiceRole-Policy"
-            PolicyDocument:
-              Version: "2012-10-17"
-              Statement:
-                - Effect: "Allow"
-                  Action:
-                    - "dynamodb:Query"
-                    - "dynamodb:BatchWriteItem"
-                    - "dynamodb:GetItem"
-                    - "dynamodb:DeleteItem"
-                    - "dynamodb:PutItem"
-                    - "dynamodb:Scan"
-                    - "dynamodb:UpdateItem"
-                  Resource:
-                    - !GetAtt PlantsTable.Arn
-
-    XRayLambdaRolePolicy:
-      Type: "AWS::IAM::Policy"
-      Properties:
-        PolicyName: "xray-policy"
-        PolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: "Allow"
-              Action:
-                - "xray:PutTraceSegments"
-                - "xray:PutTelemetryRecords"
-              Resource:
-                - "*"
-        Roles:
-          - Ref: ServiceRole

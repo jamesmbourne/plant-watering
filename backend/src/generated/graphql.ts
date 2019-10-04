@@ -20,10 +20,10 @@ export type Query = {
   getPlants: Array<Maybe<Plant>>,
 };
 
-export type GimmePlantsQueryVariables = {};
+export type FloobarQueryVariables = {};
 
 
-export type GimmePlantsQuery = (
+export type FloobarQuery = (
   { __typename?: 'Query' }
   & { getPlants: Array<Maybe<(
     { __typename?: 'Plant' }

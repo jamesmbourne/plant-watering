@@ -1,6 +1,7 @@
 import { ApolloServer } from "apollo-server-lambda";
 import { resolvers } from "./resolvers";
 import { createLogger, stdSerializers } from "bunyan";
+import { importSchema } from "graphql-import";
 
 const log = createLogger({
   name: "plant-watering-backend",
@@ -8,7 +9,7 @@ const log = createLogger({
 });
 
 const server = new ApolloServer({
-  // typeDefs: schema,
+  typeDefs: importSchema("src/schema.graphql"),
   resolvers: resolvers as any,
   formatError: err => {
     log.error({ err });
@@ -24,11 +25,7 @@ const server = new ApolloServer({
     event,
     context
   }),
-  playground: {
-    endpoint: process.env.REACT_APP_GRAPHQL_ENDPOINT
-      ? process.env.REACT_APP_GRAPHQL_ENDPOINT
-      : "/production/graphql"
-  },
+  playground: true,
   tracing: true
 });
 
