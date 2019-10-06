@@ -17,3 +17,15 @@ query GetPlant($id: ID!) {
     }
   }
 }
+
+mutation CreatePlant($name: String!, $species: String!) {
+  CreatePlant(name: $name, species: $species) {
+    id
+  }
+}
+
+mutation DeletePlant($id: ID!) {
+  DeletePlant(id: $id) {
+    id
+  }
+}

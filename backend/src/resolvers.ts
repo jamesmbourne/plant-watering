@@ -78,6 +78,13 @@ class PlantRepo {
 
     return plant;
   }
+
+  public deletePlant({ id }: { id: string }) {
+    const plant = this.getPlant(id);
+    this.plants = this.plants.filter(p => p.id !== id);
+
+    return plant;
+  }
 }
 
 const repo = new PlantRepo();
@@ -101,6 +108,9 @@ export const resolvers: Resolvers = {
   Mutation: {
     CreatePlant: async (_root, { name, species }) => {
       return repo.createPlant({ name, species });
+    },
+    DeletePlant: async (_root, { id }) => {
+      return repo.deletePlant({ id });
     }
   }
 };

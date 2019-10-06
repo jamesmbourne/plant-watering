@@ -19,6 +19,7 @@ type Query {
 
 type Mutation {
   CreatePlant(name: String!, species: String!): Plant!
+  DeletePlant(id: ID!): Plant
 }
 
 schema {

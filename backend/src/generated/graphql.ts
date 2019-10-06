@@ -13,12 +13,18 @@ export type Scalars = {
 export type Mutation = {
    __typename?: 'Mutation',
   CreatePlant: Plant,
+  DeletePlant?: Maybe<Plant>,
 };
 
 
 export type MutationCreatePlantArgs = {
   name: Scalars['String'],
   species: Scalars['String']
+};
+
+
+export type MutationDeletePlantArgs = {
+  id: Scalars['ID']
 };
 
 export type Plant = {
@@ -73,6 +79,33 @@ export type GetPlantQuery = (
       { __typename?: 'Schedule' }
       & Pick<Schedule, 'id' | 'date'>
     )> }
+  )> }
+);
+
+export type CreatePlantMutationVariables = {
+  name: Scalars['String'],
+  species: Scalars['String']
+};
+
+
+export type CreatePlantMutation = (
+  { __typename?: 'Mutation' }
+  & { CreatePlant: (
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
+  ) }
+);
+
+export type DeletePlantMutationVariables = {
+  id: Scalars['ID']
+};
+
+
+export type DeletePlantMutation = (
+  { __typename?: 'Mutation' }
+  & { DeletePlant: Maybe<(
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
   )> }
 );
 
@@ -169,6 +202,7 @@ export type ResolversParentTypes = {
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   CreatePlant?: Resolver<ResolversTypes['Plant'], ParentType, ContextType, RequireFields<MutationCreatePlantArgs, 'name' | 'species'>>,
+  DeletePlant?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, RequireFields<MutationDeletePlantArgs, 'id'>>,
 };
 
 export type PlantResolvers<ContextType = any, ParentType extends ResolversParentTypes['Plant'] = ResolversParentTypes['Plant']> = {

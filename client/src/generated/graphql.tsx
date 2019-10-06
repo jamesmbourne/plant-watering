@@ -17,12 +17,18 @@ export type Scalars = {
 export type Mutation = {
    __typename?: 'Mutation',
   CreatePlant: Plant,
+  DeletePlant?: Maybe<Plant>,
 };
 
 
 export type MutationCreatePlantArgs = {
   name: Scalars['String'],
   species: Scalars['String']
+};
+
+
+export type MutationDeletePlantArgs = {
+  id: Scalars['ID']
 };
 
 export type Plant = {
@@ -77,6 +83,33 @@ export type GetPlantQuery = (
       { __typename?: 'Schedule' }
       & Pick<Schedule, 'id' | 'date'>
     )> }
+  )> }
+);
+
+export type CreatePlantMutationVariables = {
+  name: Scalars['String'],
+  species: Scalars['String']
+};
+
+
+export type CreatePlantMutation = (
+  { __typename?: 'Mutation' }
+  & { CreatePlant: (
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
+  ) }
+);
+
+export type DeletePlantMutationVariables = {
+  id: Scalars['ID']
+};
+
+
+export type DeletePlantMutation = (
+  { __typename?: 'Mutation' }
+  & { DeletePlant: Maybe<(
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id'>
   )> }
 );
 
@@ -166,3 +199,80 @@ export function useGetPlantLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type GetPlantQueryHookResult = ReturnType<typeof useGetPlantQuery>;
 export type GetPlantLazyQueryHookResult = ReturnType<typeof useGetPlantLazyQuery>;
 export type GetPlantQueryResult = ApolloReactCommon.QueryResult<GetPlantQuery, GetPlantQueryVariables>;
+export const CreatePlantDocument = gql`
+    mutation CreatePlant($name: String!, $species: String!) {
+  CreatePlant(name: $name, species: $species) {
+    id
+  }
+}
+    `;
+export type CreatePlantMutationFn = ApolloReactCommon.MutationFunction<CreatePlantMutation, CreatePlantMutationVariables>;
+export type CreatePlantComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreatePlantMutation, CreatePlantMutationVariables>, 'mutation'>;
+
+    export const CreatePlantComponent = (props: CreatePlantComponentProps) => (
+      <ApolloReactComponents.Mutation<CreatePlantMutation, CreatePlantMutationVariables> mutation={CreatePlantDocument} {...props} />
+    );
+    
+
+/**
+ * __useCreatePlantMutation__
+ *
+ * To run a mutation, you first call `useCreatePlantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePlantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPlantMutation, { data, loading, error }] = useCreatePlantMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      species: // value for 'species'
+ *   },
+ * });
+ */
+export function useCreatePlantMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreatePlantMutation, CreatePlantMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreatePlantMutation, CreatePlantMutationVariables>(CreatePlantDocument, baseOptions);
+      }
+export type CreatePlantMutationHookResult = ReturnType<typeof useCreatePlantMutation>;
+export type CreatePlantMutationResult = ApolloReactCommon.MutationResult<CreatePlantMutation>;
+export type CreatePlantMutationOptions = ApolloReactCommon.BaseMutationOptions<CreatePlantMutation, CreatePlantMutationVariables>;
+export const DeletePlantDocument = gql`
+    mutation DeletePlant($id: ID!) {
+  DeletePlant(id: $id) {
+    id
+  }
+}
+    `;
+export type DeletePlantMutationFn = ApolloReactCommon.MutationFunction<DeletePlantMutation, DeletePlantMutationVariables>;
+export type DeletePlantComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeletePlantMutation, DeletePlantMutationVariables>, 'mutation'>;
+
+    export const DeletePlantComponent = (props: DeletePlantComponentProps) => (
+      <ApolloReactComponents.Mutation<DeletePlantMutation, DeletePlantMutationVariables> mutation={DeletePlantDocument} {...props} />
+    );
+    
+
+/**
+ * __useDeletePlantMutation__
+ *
+ * To run a mutation, you first call `useDeletePlantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePlantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePlantMutation, { data, loading, error }] = useDeletePlantMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePlantMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeletePlantMutation, DeletePlantMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeletePlantMutation, DeletePlantMutationVariables>(DeletePlantDocument, baseOptions);
+      }
+export type DeletePlantMutationHookResult = ReturnType<typeof useDeletePlantMutation>;
+export type DeletePlantMutationResult = ApolloReactCommon.MutationResult<DeletePlantMutation>;
+export type DeletePlantMutationOptions = ApolloReactCommon.BaseMutationOptions<DeletePlantMutation, DeletePlantMutationVariables>;
