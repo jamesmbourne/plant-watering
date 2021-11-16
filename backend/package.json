@@ -10,7 +10,7 @@
     "@types/bunyan": "^1.8.6",
     "@types/graphql": "^14.5.0",
     "apollo-server-lambda": "^2.9.4",
-    "aws-sdk": "^2.542.0",
+    "aws-sdk": "^2.814.0",
     "aws-xray-sdk": "^2.3.6",
     "bunyan": "^1.8.12",
     "graphql": "^14.5.8",
